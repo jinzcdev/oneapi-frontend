@@ -35,17 +35,18 @@ const Index: React.FC = () => {
         loading={loading}
         itemLayout="horizontal"
         dataSource={list}
-        renderItem={(item) => {
-          const apiLink = `/interface_info/${item.id}`;
-          return <List.Item
-            actions={[<Link key={item.id} to={apiLink}>查看</Link>]}
-          >
-            <List.Item.Meta
-              title={<Link to={apiLink}>{item.name}</Link>}
-              description={item.description}
-            />
-          </List.Item>
-        }
+        renderItem={
+          (item) => {
+            const apiLink = `/interface_info/${item.id}`;
+            return <List.Item
+              actions={[<Link key={item.id} to={apiLink}>查看</Link>]}
+            >
+              <List.Item.Meta
+                title={<Link to={apiLink}>{item.name}</Link>}
+                description={item.description}
+              />
+            </List.Item>
+          }
         }
         pagination={
           {

@@ -2,15 +2,16 @@ import {PageContainer} from '@ant-design/pro-components';
 import React, {useEffect, useState} from 'react';
 import {useParams} from "@@/exports";
 import {getInterfaceInfoByIdUsingGET} from "@/services/oneapi/interfaceInfoController";
-import {Badge, Card, Descriptions, message} from "antd";
+import {Badge, Button, Card, Descriptions, Form, Input, message, Space} from "antd";
 import moment from "moment";
 import {defaultStyles, JsonView} from "react-json-view-lite";
 
 
-const Index: React.FC = () => {
+const InterfaceInfo: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [interfaceInfo, setInterfaceInfo] = useState<API.InterfaceInfo | undefined>(undefined);
 
+  const [apiResult, setApiResult] = useState<any>("{}");
   const params = useParams<{ id: string }>();
 
   const loadData = async (): Promise<API.InterfaceInfo | undefined> => {
@@ -36,38 +37,71 @@ const Index: React.FC = () => {
 
   return (
     <PageContainer title={"接口详情"} loading={loading}>
-      <Card>
-        {
-          interfaceInfo ?
-            <Descriptions title={interfaceInfo.name} bordered>
-              <Descriptions.Item label="请求地址">{interfaceInfo.url}</Descriptions.Item>
-              <Descriptions.Item label="描述" span={2}>{interfaceInfo.description}</Descriptions.Item>
-              <Descriptions.Item label="请求方法">{interfaceInfo.method}</Descriptions.Item>
-              <Descriptions.Item
-                label="创建时间">{moment(interfaceInfo.createTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
-              <Descriptions.Item label="更新时间" span={2}>
-                {moment(interfaceInfo.updateTime).format('YYYY-MM-DD HH:mm:ss')}
-              </Descriptions.Item>
-              <Descriptions.Item label="接口状态" span={3}>
-                <Badge status={interfaceInfo.status === 1 ? "success" : "error"}
-                       text={interfaceInfo.status === 1 ? "正常" : "下线"}/>
-              </Descriptions.Item>
-              <Descriptions.Item label="请求头">{interfaceInfo.requestHeader}</Descriptions.Item>
-              <Descriptions.Item label="响应头">{interfaceInfo.responseHeader}</Descriptions.Item>
-              <Descriptions.Item label="价格">免费</Descriptions.Item>
-              <Descriptions.Item label="请求参数">
-                {interfaceInfo.requestParams ?
-                  <JsonView
-                    data={JSON.parse(interfaceInfo.requestParams)}
-                    shouldInitiallyExpand={() => true}
-                    style={defaultStyles}/>
-                  : ""}
-              </Descriptions.Item>
-            </Descriptions> : ""
-        }
-      </Card>
+      <Space direction="vertical" size={20}>
+        <Card title={interfaceInfo?.name}>
+          {
+            interfaceInfo ?
+              <Descriptions bordered>
+                <Descriptions.Item label="请求地址">{interfaceInfo.url}</Descriptions.Item>
+                <Descriptions.Item label="描述" span={2}>{interfaceInfo.description}</Descriptions.Item>
+                <Descriptions.Item label="请求方法">{interfaceInfo.method}</Descriptions.Item>
+                <Descriptions.Item
+                  label="创建时间">{moment(interfaceInfo.createTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+                <Descriptions.Item label="更新时间" span={2}>
+                  {moment(interfaceInfo.updateTime).format('YYYY-MM-DD HH:mm:ss')}
+                </Descriptions.Item>
+                <Descriptions.Item label="接口状态" span={3}>
+                  <Badge status={interfaceInfo.status === 1 ? "success" : "error"}
+                         text={interfaceInfo.status === 1 ? "正常" : "下线"}/>
+                </Descriptions.Item>
+                <Descriptions.Item label="请求头">{interfaceInfo.requestHeader}</Descriptions.Item>
+                <Descriptions.Item label="响应头">{interfaceInfo.responseHeader}</Descriptions.Item>
+                <Descriptions.Item label="价格">免费</Descriptions.Item>
+                <Descriptions.Item label="请求参数">
+                  {interfaceInfo.requestParams ?
+                    <JsonView
+                      data={JSON.parse(interfaceInfo.requestParams)}
+                      shouldInitiallyExpand={() => true}
+                      style={defaultStyles}/>
+                    : ""}
+                </Descriptions.Item>
+              </Descriptions> : ""
+          }
+        </Card>
+
+        <Card title={'在线测试'}>
+          <Form
+            name="invoke"
+            layout={"vertical"}
+            onFinish={(values) => {
+              setApiResult(JSON.stringify(values.params));
+            }}
+            onFinishFailed={() => {
+            }}
+          >
+            <Form.Item
+              label="请求参数"
+              name="params"
+            >
+              <Input/>
+            </Form.Item>
+
+            <Button type="primary" htmlType="submit">
+              调用
+            </Button>
+
+          </Form>
+        </Card>
+
+        <Card title={'返回结果'}>
+          <JsonView
+            data={JSON.parse(apiResult)}
+            shouldInitiallyExpand={() => true}
+            style={defaultStyles}/>
+        </Card>
+      </Space>
     </PageContainer>
   );
 };
 
-export default Index;
+export default InterfaceInfo;

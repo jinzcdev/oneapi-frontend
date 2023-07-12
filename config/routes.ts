@@ -4,7 +4,7 @@ export default [
     layout: false,
     routes: [{name: '登录', path: '/user/login', component: './User/Login'}],
   },
-  {path: '/', name: '接口列表', icon: 'smile', component: './Index'},
+  {path: '/', name: '接口列表', icon: 'smile', component: './InterfaceList'},
   {path: '/interface_info/:id', name: '接口详情', component: './InterfaceInfo', hideInMenu: true},
   {
     path: '/admin',
