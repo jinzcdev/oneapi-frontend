@@ -32,6 +32,18 @@ export async function deleteInterfaceInfoUsingPOST(
   });
 }
 
+/** disableApi POST /oneapi/interfaceInfo/disable */
+export async function disableApiUsingPOST(body: API.IdRequest, options?: { [key: string]: any }) {
+  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/disable', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** getInterfaceInfoById GET /oneapi/interfaceInfo/get */
 export async function getInterfaceInfoByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -85,27 +97,9 @@ export async function listInterfaceInfoByPageUsingGET(
   });
 }
 
-/** offlineInterfaceInfo POST /oneapi/interfaceInfo/offline */
-export async function offlineInterfaceInfoUsingPOST(
-  body: API.IdRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/offline', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** onlineInterfaceInfo POST /oneapi/interfaceInfo/online */
-export async function onlineInterfaceInfoUsingPOST(
-  body: API.IdRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/online', {
+/** publishApi POST /oneapi/interfaceInfo/publish */
+export async function publishApiUsingPOST(body: API.IdRequest, options?: { [key: string]: any }) {
+  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/publish', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
