@@ -1,8 +1,8 @@
 import {PageContainer} from '@ant-design/pro-components';
 import React, {useEffect, useState} from 'react';
 import {useParams} from "@@/exports";
-import {getInterfaceInfoByIdUsingGET} from "@/services/oneapi/interfaceInfoController";
-import {Badge, Button, Card, Descriptions, Form, Input, message, Space} from "antd";
+import {getInterfaceInfoByIdUsingGET, invokeInterfaceInfoUsingPOST} from "@/services/oneapi/interfaceInfoController";
+import {Badge, Button, Card, Descriptions, Form, Image, Input, message, Space} from "antd";
 import moment from "moment";
 import {defaultStyles, JsonView} from "react-json-view-lite";
 
@@ -11,8 +11,26 @@ const InterfaceInfo: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [interfaceInfo, setInterfaceInfo] = useState<API.InterfaceInfo | undefined>(undefined);
 
-  const [apiResult, setApiResult] = useState<any>("{}");
+  const [apiResult, setApiResult] = useState<string>("{}");
   const params = useParams<{ id: string }>();
+
+  const handleInvoke = async (value: API.InterfaceInfoInvokeRequest) => {
+    const hide = message.loading('调用中...');
+    try {
+      const res = await invokeInterfaceInfoUsingPOST(value);
+      hide();
+      if (res && res.code === 0) {
+        message.success('调用成功');
+        setApiResult(res.data ?? "");
+        return true;
+      }
+      return false;
+    } catch (error) {
+      hide();
+      message.error('调用失败');
+      return false;
+    }
+  };
 
   const loadData = async (): Promise<API.InterfaceInfo | undefined> => {
     setLoading(true);
@@ -58,12 +76,17 @@ const InterfaceInfo: React.FC = () => {
                 <Descriptions.Item label="响应头">{interfaceInfo.responseHeader}</Descriptions.Item>
                 <Descriptions.Item label="价格">免费</Descriptions.Item>
                 <Descriptions.Item label="请求参数">
-                  {interfaceInfo.requestParams ?
-                    <JsonView
-                      data={JSON.parse(interfaceInfo.requestParams)}
-                      shouldInitiallyExpand={() => true}
-                      style={defaultStyles}/>
-                    : ""}
+                  {
+                    interfaceInfo.method === "GET" && (interfaceInfo.url ?? "") + interfaceInfo.requestParams
+                  }
+                  {
+                    interfaceInfo.method === "POST" && interfaceInfo.requestParams ?
+                      <JsonView
+                        data={JSON.parse(interfaceInfo.requestParams)}
+                        shouldInitiallyExpand={() => true}
+                        style={defaultStyles}/>
+                      : ""
+                  }
                 </Descriptions.Item>
               </Descriptions> : ""
           }
@@ -73,8 +96,15 @@ const InterfaceInfo: React.FC = () => {
           <Form
             name="invoke"
             layout={"vertical"}
-            onFinish={(values) => {
-              setApiResult(JSON.stringify(values.params));
+            onFinish={async (values) => {
+              if (!interfaceInfo) {
+                message.error("接口信息不存在");
+                return;
+              }
+              await handleInvoke({
+                id: interfaceInfo.id,
+                requestParams: values.params,
+              });
             }}
             onFinishFailed={() => {
             }}
@@ -94,10 +124,19 @@ const InterfaceInfo: React.FC = () => {
         </Card>
 
         <Card title={'返回结果'}>
-          <JsonView
-            data={JSON.parse(apiResult)}
-            shouldInitiallyExpand={() => true}
-            style={defaultStyles}/>
+          {
+            // 如果返回的结果是图片地址，则使用 Image 组件展现
+            // todo 应该改为使用特定的结果展示类型（如数据库中记录如何展示）来展示，而不是根据结果解析
+            (apiResult.endsWith(".jpg") || apiResult.endsWith(".png")) ?
+              <Image
+                width={200}
+                src={apiResult}
+              /> :
+              < JsonView
+                data={JSON.parse(apiResult)}
+                shouldInitiallyExpand={() => true}
+                style={defaultStyles}/>
+          }
         </Card>
       </Space>
     </PageContainer>
