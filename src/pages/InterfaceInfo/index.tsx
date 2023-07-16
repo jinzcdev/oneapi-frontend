@@ -77,10 +77,12 @@ const InterfaceInfo: React.FC = () => {
                 <Descriptions.Item label="价格">免费</Descriptions.Item>
                 <Descriptions.Item label="请求参数">
                   {
-                    interfaceInfo.method === "GET" && (interfaceInfo.url ?? "") + interfaceInfo.requestParams
+                    interfaceInfo.method === "GET" &&
+                    ((interfaceInfo.requestParams?.trim() ?? "") === "" ? "无" : (interfaceInfo.url ?? "" + interfaceInfo.requestParams))
                   }
                   {
-                    interfaceInfo.method === "POST" && interfaceInfo.requestParams ?
+                    interfaceInfo.method === "POST"
+                    && interfaceInfo.requestParams ?
                       <JsonView
                         data={JSON.parse(interfaceInfo.requestParams)}
                         shouldInitiallyExpand={() => true}
