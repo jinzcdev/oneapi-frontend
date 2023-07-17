@@ -14,7 +14,6 @@ import {
   updateInterfaceInfoUsingPOST
 } from "@/services/oneapi/interfaceInfoController";
 import CreateModal from "@/pages/Admin/InterfaceInfo/components/CreateForm";
-// import InterfaceInfoUpdateRequest = API.InterfaceInfoUpdateRequest;
 
 
 /**

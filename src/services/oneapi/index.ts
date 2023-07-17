@@ -4,7 +4,9 @@
 // API 唯一标识：
 import * as interfaceInfoController from './interfaceInfoController';
 import * as userController from './userController';
+import * as userInterfaceInfoController from './userInterfaceInfoController';
 export default {
   interfaceInfoController,
   userController,
+  userInterfaceInfoController,
 };

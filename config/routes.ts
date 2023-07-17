@@ -13,7 +13,9 @@ export default [
     access: 'canAdmin',
     routes: [
       {path: '/admin', redirect: '/admin/interface-info'},
-      {name: '接口管理', icon: 'table', path: '/admin/interface-info', component: './Admin/InterfaceInfo'},
+      {name: '接口管理', path: '/admin/interface-info', component: './Admin/InterfaceInfo'},
+      {name: '接口统计', path: '/admin/interface-statistics', component: './Admin/InterfaceStatistics'},
+      {name: '接口充值', path: '/admin/interface-recharge', component: './Admin/InterfaceRecharge'},
     ],
   },
   {path: '*', layout: false, component: './404'},

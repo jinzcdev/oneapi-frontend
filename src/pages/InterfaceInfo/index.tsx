@@ -24,10 +24,11 @@ const InterfaceInfo: React.FC = () => {
         setApiResult(res.data ?? "");
         return true;
       }
+      message.error('调用失败：' + res.message);
       return false;
     } catch (error) {
       hide();
-      message.error('调用失败');
+      message.error('调用失败：' + error);
       return false;
     }
   };
@@ -111,13 +112,20 @@ const InterfaceInfo: React.FC = () => {
             onFinishFailed={() => {
             }}
           >
-            <Form.Item
-              label="请求参数"
-              name="params"
-            >
-              <Input/>
-            </Form.Item>
+            {
+              interfaceInfo?.requestParams ? <>
+                  <Form.Item
+                    label="请求参数"
+                    name="params"
+                  >
+                    <Input/>
+                  </Form.Item>
+                </> :
+                <div style={{
+                  marginBottom: 16
+                }}>请求参数：无</div>
 
+            }
             <Button type="primary" htmlType="submit">
               调用
             </Button>
@@ -134,10 +142,11 @@ const InterfaceInfo: React.FC = () => {
                 width={200}
                 src={apiResult}
               /> :
-              < JsonView
-                data={JSON.parse(apiResult)}
-                shouldInitiallyExpand={() => true}
-                style={defaultStyles}/>
+              apiResult
+            // < JsonView
+            //   data={JSON.parse(apiResult)}
+            //   shouldInitiallyExpand={() => true}
+            //   style={defaultStyles}/>
           }
         </Card>
       </Space>

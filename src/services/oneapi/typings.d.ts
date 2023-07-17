@@ -17,6 +17,24 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseListInterfaceInvokeInfoVo = {
+    code?: number;
+    data?: InterfaceInvokeInfoVo[];
+    message?: string;
+  };
+
+  type BaseResponseListSelfInterfaceDateVo = {
+    code?: number;
+    data?: SelfInterfaceDateVo[];
+    message?: string;
+  };
+
+  type BaseResponseListUserInterfaceInfo = {
+    code?: number;
+    data?: UserInterfaceInfo[];
+    message?: string;
+  };
+
   type BaseResponselong = {
     code?: number;
     data?: number;
@@ -29,9 +47,21 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseobject = {
+    code?: number;
+    data?: Record<string, any>;
+    message?: string;
+  };
+
   type BaseResponsePageInterfaceInfo = {
     code?: number;
     data?: PageInterfaceInfo;
+    message?: string;
+  };
+
+  type BaseResponsePageUserInterfaceInfo = {
+    code?: number;
+    data?: PageUserInterfaceInfo;
     message?: string;
   };
 
@@ -53,6 +83,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseUserInterfaceInfo = {
+    code?: number;
+    data?: UserInterfaceInfo;
+    message?: string;
+  };
+
   type BaseResponseUserVO = {
     code?: number;
     data?: UserVO;
@@ -69,6 +105,11 @@ declare namespace API {
   };
 
   type getUserByIdUsingGETParams = {
+    /** id */
+    id?: number;
+  };
+
+  type getUserInterfaceInfoByIdUsingGETParams = {
     /** id */
     id?: number;
   };
@@ -126,6 +167,12 @@ declare namespace API {
     url?: string;
   };
 
+  type InterfaceInvokeInfoVo = {
+    id?: number;
+    name?: string;
+    totalNum?: number;
+  };
+
   type listInterfaceInfoByPageUsingGETParams = {
     current?: number;
     description?: string;
@@ -173,6 +220,32 @@ declare namespace API {
     userRole?: string;
   };
 
+  type listUserInterfaceInfoByPageUsingGETParams = {
+    current?: number;
+    id?: number;
+    interfaceInfoId?: number;
+    leftNum?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    status?: number;
+    totalNum?: number;
+    userId?: number;
+  };
+
+  type listUserInterfaceInfoUsingGETParams = {
+    current?: number;
+    id?: number;
+    interfaceInfoId?: number;
+    leftNum?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    status?: number;
+    totalNum?: number;
+    userId?: number;
+  };
+
   type OrderItem = {
     asc?: boolean;
     column?: string;
@@ -191,6 +264,19 @@ declare namespace API {
     total?: number;
   };
 
+  type PageUserInterfaceInfo = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: UserInterfaceInfo[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
+  };
+
   type PageUserVO = {
     countId?: string;
     current?: number;
@@ -202,6 +288,23 @@ declare namespace API {
     searchCount?: boolean;
     size?: number;
     total?: number;
+  };
+
+  type payInterfaceUsingPOSTParams = {
+    /** interfaceName */
+    interfaceName?: string;
+    /** adminPsd */
+    adminPsd?: string;
+    /** payAccount */
+    payAccount?: string;
+    /** num */
+    num?: number;
+  };
+
+  type SelfInterfaceDateVo = {
+    interfaceName?: string;
+    leftNum?: number;
+    totalNum?: number;
   };
 
   type User = {
@@ -227,6 +330,32 @@ declare namespace API {
     userName?: string;
     userPassword?: string;
     userRole?: string;
+  };
+
+  type UserInterfaceInfo = {
+    createTime?: string;
+    id?: number;
+    interfaceInfoId?: number;
+    isDelete?: number;
+    leftNum?: number;
+    status?: number;
+    totalNum?: number;
+    updateTime?: string;
+    userId?: number;
+  };
+
+  type UserInterfaceInfoAddRequest = {
+    interfaceInfoId?: number;
+    leftNum?: number;
+    totalNum?: number;
+    userId?: number;
+  };
+
+  type UserInterfaceInfoUpdateRequest = {
+    id?: number;
+    leftNum?: number;
+    status?: number;
+    totalNum?: number;
   };
 
   type UserLoginRequest = {
