@@ -14,6 +14,21 @@ export async function addUserUsingPOST(body: API.UserAddRequest, options?: { [ke
   });
 }
 
+/** checkUserAccountAndPassword POST /oneapi/user/check */
+export async function checkUserAccountAndPasswordUsingPOST(
+  body: API.UserLoginRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseUser>('/oneapi/user/check', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** deleteUser POST /oneapi/user/delete */
 export async function deleteUserUsingPOST(
   body: API.DeleteRequest,
@@ -126,6 +141,21 @@ export async function updateUserUsingPOST(
   options?: { [key: string]: any },
 ) {
   return request<API.BaseResponseboolean>('/oneapi/user/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** updateSecretKey POST /oneapi/user/update/secret_key */
+export async function updateSecretKeyUsingPOST(
+  body: API.IdRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseboolean>('/oneapi/user/update/secret_key', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
