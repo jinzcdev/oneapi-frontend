@@ -1,10 +1,12 @@
-import {ActionType, PageContainer, ProColumns, ProTable} from '@ant-design/pro-components';
-import {Button, Layout, message} from 'antd';
+import { listInterfaceInfoVOByPageUsingPOST } from '@/services/oneapi/interfaceInfoController';
+import { addUserInterfaceInfoUsingPOST } from '@/services/oneapi/userInterfaceInfoController';
+import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import { Button, Layout, message } from 'antd';
 import Search from 'antd/es/input/Search';
-import {Content, Header} from 'antd/es/layout/layout';
-import React, {useEffect, useRef, useState} from 'react';
-import {history} from 'umi';
-import {listInterfaceInfoByPageUsingGET, publishApiUsingPOST} from "@/services/oneapi/interfaceInfoController";
+import { Content, Header } from 'antd/es/layout/layout';
+import React, { useEffect, useRef, useState } from 'react';
+import { history } from 'umi';
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -20,19 +22,19 @@ const contentStyle: React.CSSProperties = {
   lineHeight: '120px',
 };
 
-
 const Index: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [list, setList] = useState<API.InterfaceInfo[]>([]);
+  const [list, setList] = useState<API.InterfaceInfoVO[]>([]);
   const [total, setTotal] = useState<number>(0);
   const ref = useRef<ActionType>();
+  const { initialState } = useModel('@@initialState');
 
   const loadData = async (searchText = '', current = 1, pageSize = 10) => {
     setLoading(true);
     try {
       const params = {
         current,
-        pageSize
+        pageSize,
       };
       if (searchText) {
         Object.assign(params, {
@@ -40,7 +42,7 @@ const Index: React.FC = () => {
           description: searchText,
         });
       }
-      await listInterfaceInfoByPageUsingGET(params).then((res) => {
+      await listInterfaceInfoVOByPageUsingPOST(params).then((res) => {
         setList(res?.data?.records ?? []);
         setTotal(res?.data?.total ?? 0);
       });
@@ -50,11 +52,10 @@ const Index: React.FC = () => {
     setLoading(false);
   };
 
-
   /**
    * table 展示的列
    * */
-  const columns: ProColumns<API.InterfaceInfo>[] = [
+  const columns: ProColumns<API.InterfaceInfoVO>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -106,7 +107,7 @@ const Index: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => {
-        return true ? (
+        return record.isOwnerByCurrentUser ? (
           <Button
             type="primary"
             key="onlineUse"
@@ -120,13 +121,20 @@ const Index: React.FC = () => {
           <Button
             key="applyInterface"
             onClick={async () => {
-              const res = await publishApiUsingPOST({
-                id: Number(record.id),
+              const userId = initialState?.currentUser?.id;
+              if (!userId) {
+                message.success('请重新登录');
+              }
+              const res = await addUserInterfaceInfoUsingPOST({
+                interfaceInfoId: record.id,
+                userId: userId,
               });
-              if (res.code === 0) {
+              if (res.code === 200) {
                 message.success('申请成功');
                 // 刷新表格
                 await loadData();
+              } else {
+                message.error(res.message);
               }
             }}
           >
@@ -157,7 +165,7 @@ const Index: React.FC = () => {
           />
         </Header>
         <Content style={contentStyle}>
-          <ProTable<API.InterfaceInfo>
+          <ProTable<API.InterfaceInfoVO>
             rowKey="id"
             toolBarRender={false}
             columns={columns}
