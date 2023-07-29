@@ -61,7 +61,7 @@ const Profile: React.FC = () => {
         userAccount: data?.userAccount,
         userPassword: userPassword,
       });
-      if (res.code === 0 && res.data) {
+      if (res.code === 200 && res.data) {
         const res = await updateSecretKeyUsingPOST({
           id: data?.id,
         });
@@ -130,7 +130,7 @@ const Profile: React.FC = () => {
             <Divider/>
             <Row>
               <Col>
-                <FieldTimeOutlined/> 注册时间：{ data?.createTime ? moment(data?.createTime).format('YYYY-MM-DD HH:mm:ss') : '' }
+                <FieldTimeOutlined/> 注册时间：{data?.createTime ? moment(data?.createTime).format('YYYY-MM-DD HH:mm:ss') : ''}
               </Col>
             </Row>
           </Card>

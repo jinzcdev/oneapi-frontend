@@ -82,7 +82,7 @@ const Login: React.FC = () => {
     try {
       // 登录
       const res = await userRegisterUsingPOST(values);
-      if (res.code === 0 && res.data) {
+      if (res.code === 200 && res.data) {
         message.success('注册成功！');
         history.push('/');
         return;
