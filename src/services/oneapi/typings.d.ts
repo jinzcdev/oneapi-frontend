@@ -118,6 +118,7 @@ declare namespace API {
   };
 
   type InterfaceInfoAddRequest = {
+    action?: string;
     description?: string;
     host?: string;
     method?: string;
