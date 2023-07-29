@@ -77,17 +77,17 @@ export async function listUserInterfaceInfoByPageUsingGET(
   });
 }
 
-/** payInterface POST /api/userInterfaceInfo/payInterface */
-export async function payInterfaceUsingPOST(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.payInterfaceUsingPOSTParams,
+/** rechargeUserInterfaceInvokeCount POST /api/userInterfaceInfo/recharge */
+export async function rechargeUserInterfaceInvokeCountUsingPOST(
+  body: API.UserInterfaceRechargeRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseobject>('/api/userInterfaceInfo/payInterface', {
+  return request<API.BaseResponseboolean>('/api/userInterfaceInfo/recharge', {
     method: 'POST',
-    params: {
-      ...params,
+    headers: {
+      'Content-Type': 'application/json',
     },
+    data: body,
     ...(options || {}),
   });
 }

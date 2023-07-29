@@ -11,6 +11,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseListInterfaceInfoVO = {
+    code?: number;
+    data?: InterfaceInfoVO[];
+    message?: string;
+  };
+
   type BaseResponseListInterfaceInvokeInfoVo = {
     code?: number;
     data?: InterfaceInvokeInfoVo[];
@@ -36,12 +42,6 @@ declare namespace API {
   };
 
   type BaseResponseMap = {
-    code?: number;
-    data?: Record<string, any>;
-    message?: string;
-  };
-
-  type BaseResponseobject = {
     code?: number;
     data?: Record<string, any>;
     message?: string;
@@ -287,17 +287,6 @@ declare namespace API {
     total?: number;
   };
 
-  type payInterfaceUsingPOSTParams = {
-    /** interfaceName */
-    interfaceName?: string;
-    /** adminPsd */
-    adminPsd?: string;
-    /** payAccount */
-    payAccount?: string;
-    /** num */
-    num?: number;
-  };
-
   type RequestParamsRemarkVO = {
     id?: number;
     isRequired?: string;
@@ -358,8 +347,6 @@ declare namespace API {
 
   type UserInterfaceInfoAddRequest = {
     interfaceInfoId?: number;
-    leftNum?: number;
-    totalNum?: number;
     userId?: number;
   };
 
@@ -368,6 +355,12 @@ declare namespace API {
     leftNum?: number;
     status?: number;
     totalNum?: number;
+  };
+
+  type UserInterfaceRechargeRequest = {
+    interfaceId?: number;
+    rechargeCount?: number;
+    userAccount?: string;
   };
 
   type UserLoginRequest = {

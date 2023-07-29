@@ -97,6 +97,14 @@ export async function listInterfaceInfoVOByPageUsingPOST(
   });
 }
 
+/** listInterfaceInfoVO GET /api/interfaceInfo/list/vo */
+export async function listInterfaceInfoVOUsingGET(options?: { [key: string]: any }) {
+  return request<API.BaseResponseListInterfaceInfoVO>('/api/interfaceInfo/list/vo', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** listInterfaceInfoVOByUserIdPage POST /api/interfaceInfo/my/list/page/vo */
 export async function listInterfaceInfoVOByUserIdPageUsingPOST(
   body: API.InterfaceInfoQueryRequest,
