@@ -12,11 +12,12 @@ type dataType = {
 const InterfaceStatistics: React.FC = () => {
 
   const [data, setData] = useState<dataType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchInterfaceStatistics = async () => {
     const res = await getInterfaceStatisticsUsingGET();
     try {
-      if (res.code === 0 && res.data) {
+      if (res.code === 200 && res.data) {
         const list: dataType[] = res.data.map((item: API.InterfaceInvokeInfoVo) => {
           return {
             type: item.name,
@@ -32,7 +33,10 @@ const InterfaceStatistics: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchInterfaceStatistics().then(data => setData(data ?? []));
+    fetchInterfaceStatistics().then(data => {
+      setData(data ?? []);
+      setLoading(false);
+    });
   }, []);
 
   const config = {
@@ -56,7 +60,7 @@ const InterfaceStatistics: React.FC = () => {
     ],
   };
 
-  return <PageContainer title={"接口调用统计"} loading={false}>
+  return <PageContainer title={"接口调用统计"} loading={loading}>
     <Pie {...config} />
   </PageContainer>;
 };
