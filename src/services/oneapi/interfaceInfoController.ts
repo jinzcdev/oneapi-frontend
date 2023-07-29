@@ -2,12 +2,12 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** addInterfaceInfo POST /oneapi/interfaceInfo/add */
+/** addInterfaceInfo POST /api/interfaceInfo/add */
 export async function addInterfaceInfoUsingPOST(
   body: API.InterfaceInfoAddRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponselong>('/oneapi/interfaceInfo/add', {
+  return request<API.BaseResponselong>('/api/interfaceInfo/add', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,12 +17,12 @@ export async function addInterfaceInfoUsingPOST(
   });
 }
 
-/** deleteInterfaceInfo POST /oneapi/interfaceInfo/delete */
+/** deleteInterfaceInfo POST /api/interfaceInfo/delete */
 export async function deleteInterfaceInfoUsingPOST(
   body: API.DeleteRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/delete', {
+  return request<API.BaseResponseboolean>('/api/interfaceInfo/delete', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -32,9 +32,9 @@ export async function deleteInterfaceInfoUsingPOST(
   });
 }
 
-/** disableApi POST /oneapi/interfaceInfo/disable */
+/** disableApi POST /api/interfaceInfo/disable */
 export async function disableApiUsingPOST(body: API.IdRequest, options?: { [key: string]: any }) {
-  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/disable', {
+  return request<API.BaseResponseboolean>('/api/interfaceInfo/disable', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,13 +44,13 @@ export async function disableApiUsingPOST(body: API.IdRequest, options?: { [key:
   });
 }
 
-/** getInterfaceInfoById GET /oneapi/interfaceInfo/get */
-export async function getInterfaceInfoByIdUsingGET(
+/** getInterfaceInfoVOById GET /api/interfaceInfo/get/vo */
+export async function getInterfaceInfoVOByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getInterfaceInfoByIdUsingGETParams,
+  params: API.getInterfaceInfoVOByIdUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseInterfaceInfo>('/oneapi/interfaceInfo/get', {
+  return request<API.BaseResponseInterfaceInfoVO>('/api/interfaceInfo/get/vo', {
     method: 'GET',
     params: {
       ...params,
@@ -59,20 +59,20 @@ export async function getInterfaceInfoByIdUsingGET(
   });
 }
 
-/** interfaceNameList GET /oneapi/interfaceInfo/interfaceNameList */
+/** interfaceNameList GET /api/interfaceInfo/interfaceNameList */
 export async function interfaceNameListUsingGET(options?: { [key: string]: any }) {
-  return request<API.BaseResponseMap>('/oneapi/interfaceInfo/interfaceNameList', {
+  return request<API.BaseResponseMap>('/api/interfaceInfo/interfaceNameList', {
     method: 'GET',
     ...(options || {}),
   });
 }
 
-/** invokeInterfaceInfo POST /oneapi/interfaceInfo/invoke */
+/** invokeInterfaceInfo POST /api/interfaceInfo/invoke */
 export async function invokeInterfaceInfoUsingPOST(
   body: API.InterfaceInfoInvokeRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsestring>('/oneapi/interfaceInfo/invoke', {
+  return request<API.BaseResponsestring>('/api/interfaceInfo/invoke', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -82,39 +82,39 @@ export async function invokeInterfaceInfoUsingPOST(
   });
 }
 
-/** listInterfaceInfo GET /oneapi/interfaceInfo/list */
-export async function listInterfaceInfoUsingGET(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.listInterfaceInfoUsingGETParams,
+/** listInterfaceInfoVOByPage POST /api/interfaceInfo/list/page/vo */
+export async function listInterfaceInfoVOByPageUsingPOST(
+  body: API.InterfaceInfoQueryRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseListInterfaceInfo>('/oneapi/interfaceInfo/list', {
-    method: 'GET',
-    params: {
-      ...params,
+  return request<API.BaseResponsePageInterfaceInfoVO>('/api/interfaceInfo/list/page/vo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
+    data: body,
     ...(options || {}),
   });
 }
 
-/** listInterfaceInfoByPage GET /oneapi/interfaceInfo/list/page */
-export async function listInterfaceInfoByPageUsingGET(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.listInterfaceInfoByPageUsingGETParams,
+/** listInterfaceInfoVOByUserIdPage POST /api/interfaceInfo/my/list/page/vo */
+export async function listInterfaceInfoVOByUserIdPageUsingPOST(
+  body: API.InterfaceInfoQueryRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsePageInterfaceInfo>('/oneapi/interfaceInfo/list/page', {
-    method: 'GET',
-    params: {
-      ...params,
+  return request<API.BaseResponsePageInterfaceInfoVO>('/api/interfaceInfo/my/list/page/vo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
+    data: body,
     ...(options || {}),
   });
 }
 
-/** publishApi POST /oneapi/interfaceInfo/publish */
+/** publishApi POST /api/interfaceInfo/publish */
 export async function publishApiUsingPOST(body: API.IdRequest, options?: { [key: string]: any }) {
-  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/publish', {
+  return request<API.BaseResponseboolean>('/api/interfaceInfo/publish', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -124,12 +124,12 @@ export async function publishApiUsingPOST(body: API.IdRequest, options?: { [key:
   });
 }
 
-/** updateInterfaceInfo POST /oneapi/interfaceInfo/update */
+/** updateInterfaceInfo POST /api/interfaceInfo/update */
 export async function updateInterfaceInfoUsingPOST(
   body: API.InterfaceInfoUpdateRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/oneapi/interfaceInfo/update', {
+  return request<API.BaseResponseboolean>('/api/interfaceInfo/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

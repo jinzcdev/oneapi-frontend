@@ -2,12 +2,12 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** addUserInterfaceInfo POST /oneapi/userInterfaceInfo/add */
+/** addUserInterfaceInfo POST /api/userInterfaceInfo/add */
 export async function addUserInterfaceInfoUsingPOST(
   body: API.UserInterfaceInfoAddRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponselong>('/oneapi/userInterfaceInfo/add', {
+  return request<API.BaseResponselong>('/api/userInterfaceInfo/add', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,12 +17,12 @@ export async function addUserInterfaceInfoUsingPOST(
   });
 }
 
-/** deleteUserInterfaceInfo POST /oneapi/userInterfaceInfo/delete */
+/** deleteUserInterfaceInfo POST /api/userInterfaceInfo/delete */
 export async function deleteUserInterfaceInfoUsingPOST(
   body: API.DeleteRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/oneapi/userInterfaceInfo/delete', {
+  return request<API.BaseResponseboolean>('/api/userInterfaceInfo/delete', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -32,13 +32,13 @@ export async function deleteUserInterfaceInfoUsingPOST(
   });
 }
 
-/** getUserInterfaceInfoById GET /oneapi/userInterfaceInfo/get */
+/** getUserInterfaceInfoById GET /api/userInterfaceInfo/get */
 export async function getUserInterfaceInfoByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getUserInterfaceInfoByIdUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseUserInterfaceInfo>('/oneapi/userInterfaceInfo/get', {
+  return request<API.BaseResponseUserInterfaceInfo>('/api/userInterfaceInfo/get', {
     method: 'GET',
     params: {
       ...params,
@@ -47,13 +47,13 @@ export async function getUserInterfaceInfoByIdUsingGET(
   });
 }
 
-/** listUserInterfaceInfo GET /oneapi/userInterfaceInfo/list */
+/** listUserInterfaceInfo GET /api/userInterfaceInfo/list */
 export async function listUserInterfaceInfoUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.listUserInterfaceInfoUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseListUserInterfaceInfo>('/oneapi/userInterfaceInfo/list', {
+  return request<API.BaseResponseListUserInterfaceInfo>('/api/userInterfaceInfo/list', {
     method: 'GET',
     params: {
       ...params,
@@ -62,13 +62,13 @@ export async function listUserInterfaceInfoUsingGET(
   });
 }
 
-/** listUserInterfaceInfoByPage GET /oneapi/userInterfaceInfo/list/page */
+/** listUserInterfaceInfoByPage GET /api/userInterfaceInfo/list/page */
 export async function listUserInterfaceInfoByPageUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.listUserInterfaceInfoByPageUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsePageUserInterfaceInfo>('/oneapi/userInterfaceInfo/list/page', {
+  return request<API.BaseResponsePageUserInterfaceInfo>('/api/userInterfaceInfo/list/page', {
     method: 'GET',
     params: {
       ...params,
@@ -77,13 +77,13 @@ export async function listUserInterfaceInfoByPageUsingGET(
   });
 }
 
-/** payInterface POST /oneapi/userInterfaceInfo/payInterface */
+/** payInterface POST /api/userInterfaceInfo/payInterface */
 export async function payInterfaceUsingPOST(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.payInterfaceUsingPOSTParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseobject>('/oneapi/userInterfaceInfo/payInterface', {
+  return request<API.BaseResponseobject>('/api/userInterfaceInfo/payInterface', {
     method: 'POST',
     params: {
       ...params,
@@ -92,10 +92,10 @@ export async function payInterfaceUsingPOST(
   });
 }
 
-/** selfInterfaceData GET /oneapi/userInterfaceInfo/selfInterfaceData */
+/** selfInterfaceData GET /api/userInterfaceInfo/selfInterfaceData */
 export async function selfInterfaceDataUsingGET(options?: { [key: string]: any }) {
   return request<API.BaseResponseListSelfInterfaceDateVo>(
-    '/oneapi/userInterfaceInfo/selfInterfaceData',
+    '/api/userInterfaceInfo/selfInterfaceData',
     {
       method: 'GET',
       ...(options || {}),
@@ -103,23 +103,20 @@ export async function selfInterfaceDataUsingGET(options?: { [key: string]: any }
   );
 }
 
-/** getInterfaceStatistics GET /oneapi/userInterfaceInfo/statistics */
+/** getInterfaceStatistics GET /api/userInterfaceInfo/statistics */
 export async function getInterfaceStatisticsUsingGET(options?: { [key: string]: any }) {
-  return request<API.BaseResponseListInterfaceInvokeInfoVo>(
-    '/oneapi/userInterfaceInfo/statistics',
-    {
-      method: 'GET',
-      ...(options || {}),
-    },
-  );
+  return request<API.BaseResponseListInterfaceInvokeInfoVo>('/api/userInterfaceInfo/statistics', {
+    method: 'GET',
+    ...(options || {}),
+  });
 }
 
-/** updateUserInterfaceInfo POST /oneapi/userInterfaceInfo/update */
+/** updateUserInterfaceInfo POST /api/userInterfaceInfo/update */
 export async function updateUserInterfaceInfoUsingPOST(
   body: API.UserInterfaceInfoUpdateRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/oneapi/userInterfaceInfo/update', {
+  return request<API.BaseResponseboolean>('/api/userInterfaceInfo/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

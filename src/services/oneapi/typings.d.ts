@@ -5,15 +5,9 @@ declare namespace API {
     message?: string;
   };
 
-  type BaseResponseInterfaceInfo = {
+  type BaseResponseInterfaceInfoVO = {
     code?: number;
-    data?: InterfaceInfo;
-    message?: string;
-  };
-
-  type BaseResponseListInterfaceInfo = {
-    code?: number;
-    data?: InterfaceInfo[];
+    data?: InterfaceInfoVO;
     message?: string;
   };
 
@@ -53,9 +47,9 @@ declare namespace API {
     message?: string;
   };
 
-  type BaseResponsePageInterfaceInfo = {
+  type BaseResponsePageInterfaceInfoVO = {
     code?: number;
-    data?: PageInterfaceInfo;
+    data?: PageInterfaceInfoVO;
     message?: string;
   };
 
@@ -99,7 +93,7 @@ declare namespace API {
     id?: number;
   };
 
-  type getInterfaceInfoByIdUsingGETParams = {
+  type getInterfaceInfoVOByIdUsingGETParams = {
     /** id */
     id?: number;
   };
@@ -123,30 +117,17 @@ declare namespace API {
     id?: number;
   };
 
-  type InterfaceInfo = {
-    createTime?: string;
-    description?: string;
-    id?: number;
-    isDelete?: number;
-    method?: string;
-    name?: string;
-    requestHeader?: string;
-    requestParams?: string;
-    responseHeader?: string;
-    status?: number;
-    updateTime?: string;
-    uri?: string;
-    url?: string;
-    userId?: number;
-  };
-
   type InterfaceInfoAddRequest = {
     description?: string;
+    host?: string;
     method?: string;
     name?: string;
     requestHeader?: string;
     requestParams?: string;
+    requestParamsRemark?: RequestParamsRemarkVO[];
     responseHeader?: string;
+    responseParamsRemark?: ResponseParamsRemarkVO[];
+    status?: number;
     url?: string;
   };
 
@@ -155,54 +136,69 @@ declare namespace API {
     requestParams?: string;
   };
 
+  type InterfaceInfoQueryRequest = {
+    createTime?: string;
+    current?: number;
+    description?: string;
+    host?: string;
+    id?: number;
+    isDelete?: number;
+    method?: string;
+    name?: string;
+    pageSize?: number;
+    requestHeader?: string;
+    requestParamsRemark?: RequestParamsRemarkVO[];
+    responseHeader?: string;
+    responseParamsRemark?: ResponseParamsRemarkVO[];
+    searchText?: string;
+    sortField?: string;
+    sortOrder?: string;
+    status?: number;
+    url?: string;
+    userId?: number;
+  };
+
   type InterfaceInfoUpdateRequest = {
     description?: string;
+    host?: string;
     id?: number;
     method?: string;
     name?: string;
     requestHeader?: string;
     requestParams?: string;
+    requestParamsRemark?: RequestParamsRemarkVO[];
     responseHeader?: string;
+    responseParamsRemark?: ResponseParamsRemarkVO[];
     status?: number;
     url?: string;
+  };
+
+  type InterfaceInfoVO = {
+    createTime?: string;
+    description?: string;
+    host?: string;
+    id?: number;
+    isOwnerByCurrentUser?: boolean;
+    leftNum?: number;
+    method?: string;
+    name?: string;
+    requestHeader?: string;
+    requestParams?: string;
+    requestParamsRemark?: RequestParamsRemarkVO[];
+    responseHeader?: string;
+    responseParamsRemark?: ResponseParamsRemarkVO[];
+    status?: number;
+    totalNum?: number;
+    updateTime?: string;
+    url?: string;
+    user?: UserVO;
+    userId?: number;
   };
 
   type InterfaceInvokeInfoVo = {
     id?: number;
     name?: string;
     totalNum?: number;
-  };
-
-  type listInterfaceInfoByPageUsingGETParams = {
-    current?: number;
-    description?: string;
-    id?: number;
-    method?: string;
-    name?: string;
-    pageSize?: number;
-    requestHeader?: string;
-    responseHeader?: string;
-    sortField?: string;
-    sortOrder?: string;
-    status?: number;
-    url?: string;
-    userId?: number;
-  };
-
-  type listInterfaceInfoUsingGETParams = {
-    current?: number;
-    description?: string;
-    id?: number;
-    method?: string;
-    name?: string;
-    pageSize?: number;
-    requestHeader?: string;
-    responseHeader?: string;
-    sortField?: string;
-    sortOrder?: string;
-    status?: number;
-    url?: string;
-    userId?: number;
   };
 
   type listUserByPageUsingGETParams = {
@@ -251,14 +247,14 @@ declare namespace API {
     column?: string;
   };
 
-  type PageInterfaceInfo = {
+  type PageInterfaceInfoVO = {
     countId?: string;
     current?: number;
     maxLimit?: number;
     optimizeCountSql?: boolean;
     orders?: OrderItem[];
     pages?: number;
-    records?: InterfaceInfo[];
+    records?: InterfaceInfoVO[];
     searchCount?: boolean;
     size?: number;
     total?: number;
@@ -299,6 +295,21 @@ declare namespace API {
     payAccount?: string;
     /** num */
     num?: number;
+  };
+
+  type RequestParamsRemarkVO = {
+    id?: number;
+    isRequired?: string;
+    name?: string;
+    remark?: string;
+    type?: string;
+  };
+
+  type ResponseParamsRemarkVO = {
+    id?: number;
+    name?: string;
+    remark?: string;
+    type?: string;
   };
 
   type SelfInterfaceDateVo = {

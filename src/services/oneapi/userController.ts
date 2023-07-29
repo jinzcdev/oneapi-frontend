@@ -2,9 +2,9 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** addUser POST /oneapi/user/add */
+/** addUser POST /api/user/add */
 export async function addUserUsingPOST(body: API.UserAddRequest, options?: { [key: string]: any }) {
-  return request<API.BaseResponselong>('/oneapi/user/add', {
+  return request<API.BaseResponselong>('/api/user/add', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -14,12 +14,12 @@ export async function addUserUsingPOST(body: API.UserAddRequest, options?: { [ke
   });
 }
 
-/** checkUserAccountAndPassword POST /oneapi/user/check */
+/** checkUserAccountAndPassword POST /api/user/check */
 export async function checkUserAccountAndPasswordUsingPOST(
   body: API.UserLoginRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseUser>('/oneapi/user/check', {
+  return request<API.BaseResponseUser>('/api/user/check', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -29,12 +29,12 @@ export async function checkUserAccountAndPasswordUsingPOST(
   });
 }
 
-/** deleteUser POST /oneapi/user/delete */
+/** deleteUser POST /api/user/delete */
 export async function deleteUserUsingPOST(
   body: API.DeleteRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/oneapi/user/delete', {
+  return request<API.BaseResponseboolean>('/api/user/delete', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,13 +44,13 @@ export async function deleteUserUsingPOST(
   });
 }
 
-/** getUserById GET /oneapi/user/get */
+/** getUserById GET /api/user/get */
 export async function getUserByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getUserByIdUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseUser>('/oneapi/user/get', {
+  return request<API.BaseResponseUser>('/api/user/get', {
     method: 'GET',
     params: {
       ...params,
@@ -59,21 +59,21 @@ export async function getUserByIdUsingGET(
   });
 }
 
-/** getLoginUser GET /oneapi/user/get/login */
+/** getLoginUser GET /api/user/get/login */
 export async function getLoginUserUsingGET(options?: { [key: string]: any }) {
-  return request<API.BaseResponseUser>('/oneapi/user/get/login', {
+  return request<API.BaseResponseUser>('/api/user/get/login', {
     method: 'GET',
     ...(options || {}),
   });
 }
 
-/** getUserVOById GET /oneapi/user/get/vo */
+/** getUserVOById GET /api/user/get/vo */
 export async function getUserVOByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getUserVOByIdUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseUserVO>('/oneapi/user/get/vo', {
+  return request<API.BaseResponseUserVO>('/api/user/get/vo', {
     method: 'GET',
     params: {
       ...params,
@@ -82,13 +82,13 @@ export async function getUserVOByIdUsingGET(
   });
 }
 
-/** listUserByPage GET /oneapi/user/list/page */
+/** listUserByPage GET /api/user/list/page */
 export async function listUserByPageUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.listUserByPageUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsePageUserVO>('/oneapi/user/list/page', {
+  return request<API.BaseResponsePageUserVO>('/api/user/list/page', {
     method: 'GET',
     params: {
       ...params,
@@ -97,12 +97,12 @@ export async function listUserByPageUsingGET(
   });
 }
 
-/** userLogin POST /oneapi/user/login */
+/** userLogin POST /api/user/login */
 export async function userLoginUsingPOST(
   body: API.UserLoginRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseUser>('/oneapi/user/login', {
+  return request<API.BaseResponseUser>('/api/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -112,20 +112,20 @@ export async function userLoginUsingPOST(
   });
 }
 
-/** userLogout POST /oneapi/user/logout */
+/** userLogout POST /api/user/logout */
 export async function userLogoutUsingPOST(options?: { [key: string]: any }) {
-  return request<API.BaseResponseboolean>('/oneapi/user/logout', {
+  return request<API.BaseResponseboolean>('/api/user/logout', {
     method: 'POST',
     ...(options || {}),
   });
 }
 
-/** userRegister POST /oneapi/user/register */
+/** userRegister POST /api/user/register */
 export async function userRegisterUsingPOST(
   body: API.UserRegisterRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponselong>('/oneapi/user/register', {
+  return request<API.BaseResponselong>('/api/user/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -135,12 +135,12 @@ export async function userRegisterUsingPOST(
   });
 }
 
-/** updateUser POST /oneapi/user/update */
+/** updateUser POST /api/user/update */
 export async function updateUserUsingPOST(
   body: API.UserUpdateRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/oneapi/user/update', {
+  return request<API.BaseResponseboolean>('/api/user/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -150,12 +150,12 @@ export async function updateUserUsingPOST(
   });
 }
 
-/** updateSecretKey POST /oneapi/user/update/secret_key */
+/** updateSecretKey POST /api/user/update/secret_key */
 export async function updateSecretKeyUsingPOST(
   body: API.IdRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/oneapi/user/update/secret_key', {
+  return request<API.BaseResponseboolean>('/api/user/update/secret_key', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
