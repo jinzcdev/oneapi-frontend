@@ -1,18 +1,17 @@
 import Footer from '@/components/Footer';
-import {LockOutlined, UserOutlined,} from '@ant-design/icons';
-import {LoginForm, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
-import {useEmotionCss} from '@ant-design/use-emotion-css';
-import {Helmet, history, useModel} from '@umijs/max';
-import {Alert, message, Tabs} from 'antd';
+import { userLoginUsingPOST, userRegisterUsingPOST } from '@/services/oneapi/userController';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { Helmet, history, useModel } from '@umijs/max';
+import { Alert, message, Tabs } from 'antd';
+import React, { useState } from 'react';
+import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
-import React, {useState} from 'react';
-import {flushSync} from 'react-dom';
-import {userLoginUsingPOST, userRegisterUsingPOST} from "@/services/oneapi/userController";
-
 
 const LoginMessage: React.FC<{
   content: string;
-}> = ({content}) => {
+}> = ({ content }) => {
   return (
     <Alert
       style={{
@@ -27,7 +26,7 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('loginTab');
-  const {initialState, setInitialState} = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
   const containerClassName = useEmotionCss(() => {
     return {
       display: 'flex',
@@ -55,10 +54,10 @@ const Login: React.FC = () => {
     try {
       // 登录
       const res = await userLoginUsingPOST({
-        ...values
+        ...values,
       });
       if (res.data) {
-        const defaultLoginSuccessMessage = '登录成功！';
+        const defaultLoginSuccessMessage = '登录成功';
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
@@ -69,10 +68,10 @@ const Login: React.FC = () => {
       // 如果失败去设置用户错误信息
       setUserLoginState({
         status: 'error',
-        type: 'account'
+        type: 'account',
       });
     } catch (error) {
-      const defaultLoginFailureMessage = '登录失败，请重试！';
+      const defaultLoginFailureMessage = '登录失败，请重试';
       console.log(error);
       message.error(defaultLoginFailureMessage);
     }
@@ -83,23 +82,23 @@ const Login: React.FC = () => {
       // 登录
       const res = await userRegisterUsingPOST(values);
       if (res.code === 200 && res.data) {
-        message.success('注册成功！');
+        message.success('注册成功');
         history.push('/');
         return;
       }
-      console.log(res.message);
-      // 如果失败去设置用户错误信息
+      message.error('注册失败：' + res.message);
+      // 如果失败去重置用户错误信息
       setUserLoginState({
         status: 'error',
-        type: 'account'
+        type: 'account',
       });
     } catch (error) {
       console.log(error);
-      message.error('注册失败，请重试！');
+      message.error('注册失败，请重试');
     }
   };
 
-  const {status, type: loginType} = userLoginState;
+  const { status, type: loginType } = userLoginState;
 
   return (
     <div className={containerClassName}>
@@ -119,19 +118,13 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-
-          logo={<img alt="logo" src="/logo.svg"/>}
+          logo={<img alt="logo" src="/logo.svg" />}
           title="ONE API"
           subTitle={'基于 Spring Boot 的 API 开放平台'}
           submitter={{
             searchConfig: {
-              submitText:
-                <>
-                  {
-                    type === 'loginTab' ? '登 录' : '注 册'
-                  }
-                </>
-            }
+              submitText: <>{type === 'loginTab' ? '登 录' : '注 册'}</>,
+            },
           }}
           initialValues={{
             autoLogin: true,
@@ -148,7 +141,6 @@ const Login: React.FC = () => {
             activeKey={type}
             onChange={(tabType) => {
               setType(tabType);
-
             }}
             centered
             items={[
@@ -159,26 +151,26 @@ const Login: React.FC = () => {
               {
                 key: 'registerTab',
                 label: '注册新用户',
-              }
+              },
             ]}
           />
 
           {type === 'loginTab' && (
             <>
               {status === 'error' && loginType === 'account' && (
-                <LoginMessage content={'错误的用户名和密码(admin/ant.design)'}/>
+                <LoginMessage content={'错误的用户名和密码(admin/ant.design)'} />
               )}
               <ProFormText
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined/>,
+                  prefix: <UserOutlined />,
                 }}
                 placeholder={'用户名: admin or user'}
                 rules={[
                   {
                     required: true,
-                    message: '用户名是必填项！',
+                    message: '用户名是必填项',
                   },
                 ]}
               />
@@ -186,13 +178,13 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined/>,
+                  prefix: <LockOutlined />,
                 }}
-                placeholder={'密码: ant.design'}
+                placeholder={'密码: 12345678'}
                 rules={[
                   {
                     required: true,
-                    message: '密码是必填项！',
+                    message: '密码是必填项',
                   },
                 ]}
               />
@@ -225,13 +217,17 @@ const Login: React.FC = () => {
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined/>,
+                  prefix: <UserOutlined />,
                 }}
                 placeholder={'用户名'}
                 rules={[
                   {
                     required: true,
-                    message: '用户名是必填项！',
+                    message: '用户名是必填项',
+                  },
+                  {
+                    min: 4,
+                    message: '用户名长度至少为4位',
                   },
                 ]}
               />
@@ -239,45 +235,43 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined/>,
+                  prefix: <LockOutlined />,
                 }}
                 placeholder={'用户密码'}
                 rules={[
                   {
                     required: true,
-                    message: '密码是必填项！',
+                    message: '密码是必填项',
                   },
                   {
-                    min: 6,
-                    message: '密码至少为6位！'
-                  }
+                    min: 8,
+                    message: '密码至少为8位',
+                  },
                 ]}
               />
               <ProFormText.Password
                 name="checkPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined/>,
+                  prefix: <LockOutlined />,
                 }}
                 placeholder={'再次输入密码'}
                 rules={[
                   {
                     required: true,
-                    message: '确认密码是必填项！',
+                    message: '确认密码是必填项',
                   },
                   {
-                    min: 6,
-                    message: '密码至少为6位！'
-                  }
+                    min: 8,
+                    message: '密码至少为8位',
+                  },
                 ]}
-
               />
-            </>)
-          }
+            </>
+          )}
         </LoginForm>
-
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
