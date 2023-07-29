@@ -142,7 +142,7 @@ export default defineConfig({
     },
     {
       requestLibPath: "import { request } from '@umijs/max'",
-      schemaPath: 'http://localhost:8101/oneapi/v3/api-docs',
+      schemaPath: 'http://localhost:8101/api/v3/api-docs',
       projectName: 'oneapi',
     },
   ],
