@@ -30,7 +30,7 @@ const InterfaceRecharge: React.FC = () => {
             if (res.code === 200) {
               message.success('充值成功');
             } else {
-              message.success('充值失败：' + res.message);
+              message.error('充值失败：' + res.message);
             }
           });
         }}

@@ -1,10 +1,11 @@
 import Footer from '@/components/Footer';
 import { userLoginUsingPOST, userRegisterUsingPOST } from '@/services/oneapi/userController';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { LoginFormPage } from '@ant-design/pro-form/lib';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { Helmet, history, useModel } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
+import { Alert, Avatar, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
@@ -29,13 +30,8 @@ const Login: React.FC = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
   const containerClassName = useEmotionCss(() => {
     return {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100vh',
-      overflow: 'auto',
-      backgroundImage:
-        "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
-      backgroundSize: '100% 100%',
+      height: 'calc(100vh - 100px)',
+      margin: 0,
     };
   });
 
@@ -104,173 +100,164 @@ const Login: React.FC = () => {
     <div className={containerClassName}>
       <Helmet>
         <title>
-          {'登录'}- {Settings.title}
+          {'登录'} - {Settings.title}
         </title>
       </Helmet>
-      <div
-        style={{
-          flex: '1',
-          padding: '32px 0',
+
+      <LoginFormPage
+        backgroundImageUrl="https://bingw.jasonzeng.dev/"
+        logo={<Avatar size={40} src={'/logo.jpeg'} />}
+        title="One API"
+        subTitle={'简易的 API 共享平台'}
+        submitter={{
+          searchConfig: {
+            submitText: <>{type === 'loginTab' ? '登 录' : '注 册'}</>,
+          },
+        }}
+        initialValues={{
+          autoLogin: true,
+        }}
+        onFinish={async (values) => {
+          if (type === 'loginTab') {
+            await handleSubmit(values as API.UserLoginRequest);
+          } else {
+            await handleRegister(values as API.UserRegisterRequest);
+          }
         }}
       >
-        <LoginForm
-          contentStyle={{
-            minWidth: 280,
-            maxWidth: '75vw',
+        <Tabs
+          activeKey={type}
+          onChange={(tabType) => {
+            setType(tabType);
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
-          title="ONE API"
-          subTitle={'基于 Spring Boot 的 API 开放平台'}
-          submitter={{
-            searchConfig: {
-              submitText: <>{type === 'loginTab' ? '登 录' : '注 册'}</>,
+          centered
+          items={[
+            {
+              key: 'loginTab',
+              label: '账户密码登录',
             },
-          }}
-          initialValues={{
-            autoLogin: true,
-          }}
-          onFinish={async (values) => {
-            if (type === 'loginTab') {
-              await handleSubmit(values as API.UserLoginRequest);
-            } else {
-              await handleRegister(values as API.UserRegisterRequest);
-            }
-          }}
-        >
-          <Tabs
-            activeKey={type}
-            onChange={(tabType) => {
-              setType(tabType);
-            }}
-            centered
-            items={[
-              {
-                key: 'loginTab',
-                label: '账户密码登录',
-              },
-              {
-                key: 'registerTab',
-                label: '注册新用户',
-              },
-            ]}
-          />
+            {
+              key: 'registerTab',
+              label: '注册新用户',
+            },
+          ]}
+        />
 
-          {type === 'loginTab' && (
-            <>
-              {status === 'error' && loginType === 'account' && (
-                <LoginMessage content={'错误的用户名和密码(admin/ant.design)'} />
-              )}
-              <ProFormText
-                name="userAccount"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <UserOutlined />,
-                }}
-                placeholder={'用户名: admin or user'}
-                rules={[
-                  {
-                    required: true,
-                    message: '用户名是必填项',
-                  },
-                ]}
-              />
-              <ProFormText.Password
-                name="userPassword"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                placeholder={'密码: 12345678'}
-                rules={[
-                  {
-                    required: true,
-                    message: '密码是必填项',
-                  },
-                ]}
-              />
+        {type === 'loginTab' && (
+          <>
+            {status === 'error' && loginType === 'account' && (
+              <LoginMessage content={'用户名或密码错误 (admin/12345678)'} />
+            )}
+            <ProFormText
+              name="userAccount"
+              fieldProps={{
+                size: 'large',
+                prefix: <UserOutlined />,
+              }}
+              placeholder={'用户名: admin or user'}
+              rules={[
+                {
+                  required: true,
+                  message: '用户名是必填项',
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="userPassword"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined />,
+              }}
+              placeholder={'密码: 12345678'}
+              rules={[
+                {
+                  required: true,
+                  message: '密码是必填项',
+                },
+              ]}
+            />
 
-              <div
+            <div
+              style={{
+                marginBottom: 24,
+              }}
+            >
+              <ProFormCheckbox noStyle name="autoLogin">
+                自动登录
+              </ProFormCheckbox>
+              <a
                 style={{
-                  marginBottom: 24,
+                  float: 'right',
+                }}
+                onClick={() => {
+                  setType('registerTab');
                 }}
               >
-                <ProFormCheckbox noStyle name="autoLogin">
-                  自动登录
-                </ProFormCheckbox>
-                <a
-                  style={{
-                    float: 'right',
-                  }}
-                  onClick={() => {
-                    setType('registerTab');
-                  }}
-                >
-                  新用户注册
-                </a>
-              </div>
-            </>
-          )}
+                新用户注册
+              </a>
+            </div>
+          </>
+        )}
 
-          {type === 'registerTab' && (
-            <>
-              <ProFormText
-                name="userAccount"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <UserOutlined />,
-                }}
-                placeholder={'用户名'}
-                rules={[
-                  {
-                    required: true,
-                    message: '用户名是必填项',
-                  },
-                  {
-                    min: 4,
-                    message: '用户名长度至少为4位',
-                  },
-                ]}
-              />
-              <ProFormText.Password
-                name="userPassword"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                placeholder={'用户密码'}
-                rules={[
-                  {
-                    required: true,
-                    message: '密码是必填项',
-                  },
-                  {
-                    min: 8,
-                    message: '密码至少为8位',
-                  },
-                ]}
-              />
-              <ProFormText.Password
-                name="checkPassword"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                placeholder={'再次输入密码'}
-                rules={[
-                  {
-                    required: true,
-                    message: '确认密码是必填项',
-                  },
-                  {
-                    min: 8,
-                    message: '密码至少为8位',
-                  },
-                ]}
-              />
-            </>
-          )}
-        </LoginForm>
-      </div>
+        {type === 'registerTab' && (
+          <>
+            <ProFormText
+              name="userAccount"
+              fieldProps={{
+                size: 'large',
+                prefix: <UserOutlined />,
+              }}
+              placeholder={'用户名'}
+              rules={[
+                {
+                  required: true,
+                  message: '用户名是必填项',
+                },
+                {
+                  min: 4,
+                  message: '用户名长度至少为4位',
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="userPassword"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined />,
+              }}
+              placeholder={'用户密码'}
+              rules={[
+                {
+                  required: true,
+                  message: '密码是必填项',
+                },
+                {
+                  min: 8,
+                  message: '密码至少为8位',
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="checkPassword"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined />,
+              }}
+              placeholder={'再次输入密码'}
+              rules={[
+                {
+                  required: true,
+                  message: '确认密码是必填项',
+                },
+                {
+                  min: 8,
+                  message: '密码至少为8位',
+                },
+              ]}
+            />
+          </>
+        )}
+      </LoginFormPage>
       <Footer />
     </div>
   );
