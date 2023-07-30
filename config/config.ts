@@ -1,11 +1,11 @@
 // https://umijs.org/config/
-import {defineConfig} from '@umijs/max';
-import {join} from 'path';
+import { defineConfig } from '@umijs/max';
+import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
 
-const {REACT_APP_ENV = 'dev'} = process.env;
+const { REACT_APP_ENV = 'dev' } = process.env;
 export default defineConfig({
   /**
    * @name 开启 hash 模式
@@ -74,7 +74,7 @@ export default defineConfig({
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Ant Design Pro',
+  title: 'One API',
   layout: {
     locale: true,
     ...defaultSettings,
@@ -150,4 +150,5 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
+  exportStatic: {},
 });
