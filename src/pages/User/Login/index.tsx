@@ -105,7 +105,7 @@ const Login: React.FC = () => {
       </Helmet>
 
       <LoginFormPage
-        backgroundImageUrl="https://bingw.jasonzeng.dev/"
+        backgroundImageUrl="/bg.jpeg"
         logo={<Avatar size={40} src={'/logo.jpeg'} />}
         title="One API"
         subTitle={'简易的 API 共享平台'}

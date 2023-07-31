@@ -9,12 +9,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { history } from 'umi';
 
 const headerStyle: React.CSSProperties = {
-  textAlign: 'center',
   height: '64px',
   paddingInline: '30%',
   lineHeight: '64px',
-  color: '#fff',
-  background: '#fcfcfc',
+  background: 'inherit',
 };
 
 const contentStyle: React.CSSProperties = {
